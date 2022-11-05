@@ -1,0 +1,28 @@
+{
+  "name": "team-profile-generator",
+  "version": "1.0.0",
+  "description": "Node.js application that will generate and html file of your given team profiles",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Thedanbrown/Team-Profile-Generator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Thedanbrown/Team-Profile-Generator/issues"
+  },
+  "homepage": "https://github.com/Thedanbrown/Team-Profile-Generator#readme",
+  "dependencies": {
+    "inquirer": "^8.2.4",
+    "jest": "^29.2.2"
+  }
+}
