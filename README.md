@@ -14,6 +14,8 @@
 
   This repository contains a command line based Profile generator for members of your Dev team using node.js that will generate an HTML file to deploy and display.
 
+  Uses inquirer for prompts, jest for unit testing, bootstrap for simple styling of the generated html
+
   ![Sample Generated HTML](./img/OurTeam.png)
 
   ## [Installation](#table-of-contents)

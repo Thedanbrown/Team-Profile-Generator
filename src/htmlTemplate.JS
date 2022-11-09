@@ -13,7 +13,7 @@ function generateHtml(teamArray) {
         <title>Our Team</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     </head>
-    <body>
+    <body class="bg-dark">
     <header>
         <nav class="navbar" id="navbar">
             <span class="navbar-brand mb-0 p-3 h1 w-100 text-center bg-secondary text-white" id="navbar-text">Meet Our Team</span>
