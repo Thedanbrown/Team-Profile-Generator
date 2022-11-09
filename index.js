@@ -3,121 +3,174 @@ const Engineer = require("./lib/Engineer.js");
 const Intern = require("./lib/Intern.js");
 const inquirer = require("inquirer");
 const fs = require("fs");
-const generateHTML = require("./src/htmlTemplate.js")
+const generateHtml = require("./src/htmlTemplate.js");
 
-const managerQuestions = [ 
+const { rejects } = require("assert");
+
+const teamARR = [];
+
+const managerQuestions = () => {
+        return inquirer.prompt ([
     {
         type: "input",
-        name: "managerName",
+        name: "name",
         message: "What is the Manager's name?"
     },
     {
         type: "input",
-        name: "managerId",
-        message: "What is the Manager's employee ID number?"
+        name: "id",
+        message: "What is the Manager's employee ID number?",
     },
     {
         type: "input",
-        name: "managerEmail",
-        message: "What is the Manager's email address?"
+        name: "email",
+        message: "What is the Manager's email address?",
+        validate: function (email) {
+            valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
+                if (valid) {
+                    return true;
+            }   else {
+                    console.log("Please enter a valid email")
+                    return false;
+            }
+        }
     },
     {
         type: "input",
-        name: "managerOfficeNum",
+        name: "officeNumber",
         message: "What is the Manager's office number?"
-    }
-]
+    }])
+    .then(managerData => {
+        const { name, id, email, officeNumber } = managerData;
+        const manager = new Manager (name, id, email, officeNumber);
+        teamARR.push(manager);
+        console.log(manager);
+        engineerOrIntern();
+    })
+    
+}
 
-const engineerOrIntern = [
+const engineerOrIntern = () => {
+    return inquirer.prompt ([
     {
         type: 'list',
         name: 'engineerOrIntern',
         message: 'add an Engineer, Intern, or finished adding Members',
-        choices: ['Engineer', 'Intern', 'No More Members']
-    },
+        choices: ['Engineer', 'Intern', 'Finished']
+    }])
+    .then(employeeData => {
+        switch(employeeData.engineerOrIntern) {
+            case 'Engineer': 
+                engineerQuestions();
+                break;
+            case 'Intern':
+                internQuestions();
+                break;
+            case 'Finished':
+                writeOutHtml()
+                break;
+            default:
+                engineerOrIntern();
+                break;
+        }
+    })
+}
 
-]
-
-const engineerQuestions = [ 
+const engineerQuestions = () => {
+    return inquirer.prompt ([ 
     {
         type: "input",
-        name: "engineerName",
+        name: "name",
         message: "What is the Engineer's name?"
     },
     {
         type: "input",
-        name: "engineerId",
+        name: "id",
         message: "What is the Engineer's employee ID number?"
     },
     {
         type: "input",
-        name: "engineerEmail",
-        message: "What is the Engineer's email address?"
+        name: "email",
+        message: "What is the Engineer's email address?",
+        validate: function (email) {
+            valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
+                if (valid) {
+                    return true;
+            }   else {
+                    console.log("Please enter a valid email")
+                    return false;
+            }
+        }
     },
     {
         type: "input",
-        name: "engineerGithub",
+        name: "github",
         message: "What is the Engineer's Github username?"
     }
-]
+    ])
+    .then(engineerData => {
+        const { name, id, email, github } = engineerData;
+        const engineer = new Engineer (name, id, email, github);
+        teamARR.push(engineer);
+        engineerOrIntern();
+    })
+}
 
-const internQuestions = [ 
+const internQuestions = () => {
+    return inquirer.prompt ([
     {
         type: "input",
-        name: "internName",
+        name: "name",
         message: "What is the Intern's name?"
     },
     {
         type: "input",
-        name: "internId",
+        name: "id",
         message: "What is the Intern's employee ID number?"
     },
     {
         type: "input",
-        name: "internEmail",
-        message: "What is the Intern's email address?"
+        name: "email",
+        message: "What is the Intern's email address?",
+        validate: function (email) {
+            valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
+                if (valid) {
+                    return true;
+            }   else {
+                    console.log("Please enter a valid email")
+                    return false;
+            }
+        }
     },
     {
         type: "input",
-        name: "internSchool",
+        name: "school",
         message: "What is the Intern's school?"
-    }
-]
-
-const writeHTML = teamData => {
-    return new Promise((resolve, reject) => {
-        fs.writeFile('./dist/teamIndex.html', teamData, err => {
-            if (err) {
-                reject(err);
-                return;
-            }
-
-            resolve({
-                ok: true,
-                message: 'Team Page created!'
-            });
-        });
-    });
-};
+    }])
+    .then(internData => {
+        const { name, id, email, school } = internData;
+        const intern = new Intern (name, id, email, school);
+        teamARR.push(intern);
+        engineerOrIntern();
+    })
+}
 
 //function to start questions
-const init = () => {
-    return inquirer.prompt(managerQuestions)
+    //manager questions 
     //then engineerOrIntern
     //then engineer/intern questions
     //then engineerOrIntern again ect
+
+const writeOutHtml = () => {
+    const html = generateHtml(teamARR);
+    fs.writeFile('./dist/team.html', html , err => {
+        if(err){
+            rejects(err);
+            return;
+        } else (
+            console.log('Team Profile Created')
+        )
+    } )
 }
-//call to start app
-init()
-    .then(teamData => {
-        return generateHTML(teamData);
-    })
-    .then(html => {
-        return writeHTML(html)
-    })
-    .then(writeHTMLResponse =>{
-        console.log(writeHTMLResponse.message)
-    })
-    .catch(err => {
-        console.log(err)
-    })
+
+managerQuestions();

@@ -1,61 +1,17 @@
 
-const managerCard = manager => {
-    return `
-            <div class="card text-bg-primary mb-3" style="max-width: 18rem;">
-                <div class="card-header">
-                    <h2>${manager.getName()}</h2>
-                    <h3>${manager.getRole()}<h3>
-                </div>
-                <div class="card-body">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">ID: ${manager.getID()}</li>
-                        <li class="list-group-item">Email: <a href="mailto:${manager.getEmail()}">${manager.getEmail()}</a></li>
-                        <li class="list-group-item">Office Number: ${manager.getOffice()}</li>
-                    </ul>
-                </div>
-            </div> 
-        `;
-    }
 
-const engineerCard = engineer => {
-    return `
-            <div class="card text-bg-primary mb-3" style="max-width: 18rem;">
-                <div class="card-header">
-                    <h2>${engineer.getName()}</h2>
-                    <h3>${engineer.getRole()}<h3>
-                </div>
-                <div class="card-body">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">ID: ${engineer.getID()}</li>
-                        <li class="list-group-item">Email: <a href="mailto:${engineer.getEmail()}">${engineer.getEmail()}</a></li>
-                        <li class="list-group-item">GitHub: <a href="https://github.com/${engineer.getGithub()}" target="_blank">${engineer.getGithub()}</a></li>
-                    </ul>
-                </div>
-            </div> 
-        `;
-    }
 
-const internCard = intern => {
-    return `
-            <div class="card text-bg-primary mb-3" style="max-width: 18rem;">
-                <div class="card-header">
-                    <h2>${intern.getName()}</h2>
-                    <h3>${intern.getRole()}<h3>
-                </div>
-                <div class="card-body">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">ID: ${intern.getID()}</li>
-                        <li class="list-group-item">Email: <a href="mailto:${intern.getEmail()}">${intern.getEmail()}</a></li>
-                        <li class="list-group-item">School: ${intern.getSchool()}</li>
-                    </ul>
-                </div>
-            </div> 
-        `;
-    }
 
-    
+
+
+
+
 //TODO Generate Cards and Append to HTML
-function generateHTML() {
+function generateHtml(teamArray) {
+    let teamMemberHtml = '';
+    teamArray.forEach((teamMember) => {
+        teamMemberHtml += teamMember.generateHtml();
+    })
     return `
 <!doctype html>
 <html lang="en">
@@ -75,6 +31,7 @@ function generateHTML() {
     <main>
         <div class="container">
             <div class="row justify-content-center" id="team">
+                ${teamMemberHtml}
 
             </div>
         </div>
@@ -84,4 +41,4 @@ function generateHTML() {
 </html>
 `
 }
-module.exports = generateHTML;
+module.exports = generateHtml;
