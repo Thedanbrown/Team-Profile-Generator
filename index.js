@@ -46,7 +46,6 @@ const managerQuestions = () => {
         const { name, id, email, officeNumber } = managerData;
         const manager = new Manager (name, id, email, officeNumber);
         teamARR.push(manager);
-        console.log(manager);
         //calls engineer or intern to let us choose to add either or finish
         engineerOrIntern();
     })

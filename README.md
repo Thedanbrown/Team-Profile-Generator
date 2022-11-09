@@ -29,7 +29,7 @@
   ## [Links](#table-of-contents)
 
   * [Repository](https://github.com/Thedanbrown/Team-Profile-Generator)
-  * [Usage Video]()
+  * [Usage Video](https://drive.google.com/file/d/1aMUzkII96hq5JJsZ4dsxsx4B26u6LuJj/view)
 
   ## [License](#table-of-contents)
 
