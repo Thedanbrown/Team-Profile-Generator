@@ -1,12 +1,4 @@
-
-
-
-
-
-
-
-
-//TODO Generate Cards and Append to HTML
+//Generates the html page and appends the cards for each team member generated from the user
 function generateHtml(teamArray) {
     let teamMemberHtml = '';
     teamArray.forEach((teamMember) => {
@@ -32,7 +24,6 @@ function generateHtml(teamArray) {
         <div class="container">
             <div class="row justify-content-center" id="team">
                 ${teamMemberHtml}
-
             </div>
         </div>
     </main>

@@ -1,3 +1,4 @@
+//bringing in classes and modules
 const Manager = require("./lib/Manager.js");
 const Engineer = require("./lib/Engineer.js");
 const Intern = require("./lib/Intern.js");
@@ -6,9 +7,10 @@ const fs = require("fs");
 const generateHtml = require("./src/htmlTemplate.js");
 
 const { rejects } = require("assert");
-
+//array for all of our team members as questions are answered
 const teamARR = [];
 
+//function that generates the manager and then continues the questions with choices to add engineer/intern or finish
 const managerQuestions = () => {
         return inquirer.prompt ([
     {
@@ -45,11 +47,13 @@ const managerQuestions = () => {
         const manager = new Manager (name, id, email, officeNumber);
         teamARR.push(manager);
         console.log(manager);
+        //calls engineer or intern to let us choose to add either or finish
         engineerOrIntern();
     })
     
 }
 
+//function has user choose to add intern/engineer or finish the app
 const engineerOrIntern = () => {
     return inquirer.prompt ([
     {
@@ -66,6 +70,7 @@ const engineerOrIntern = () => {
             case 'Intern':
                 internQuestions();
                 break;
+                //when finished is finally chosen the html file is generated with user data and a console message appears as confirmation
             case 'Finished':
                 writeOutHtml()
                 break;
@@ -76,6 +81,7 @@ const engineerOrIntern = () => {
     })
 }
 
+//questions to add an engineer then reopens choosing to add another intern/engineer or to finish the app
 const engineerQuestions = () => {
     return inquirer.prompt ([ 
     {
@@ -116,6 +122,7 @@ const engineerQuestions = () => {
     })
 }
 
+//questions to add an intern then reopens choosing to add another intern/engineer or to finish the app
 const internQuestions = () => {
     return inquirer.prompt ([
     {
@@ -155,12 +162,7 @@ const internQuestions = () => {
     })
 }
 
-//function to start questions
-    //manager questions 
-    //then engineerOrIntern
-    //then engineer/intern questions
-    //then engineerOrIntern again ect
-
+//function for generating the html page into the dist folder
 const writeOutHtml = () => {
     const html = generateHtml(teamARR);
     fs.writeFile('./dist/team.html', html , err => {
@@ -168,9 +170,9 @@ const writeOutHtml = () => {
             rejects(err);
             return;
         } else (
-            console.log('Team Profile Created')
+            console.log('Team Profile Created!')
         )
     } )
 }
-
+// starts the application when node index.js is run in the terminal
 managerQuestions();
